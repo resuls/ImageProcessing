@@ -6,12 +6,6 @@ import ij.gui.GenericDialog;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 
-/**
- * Demonstrates the basic use of the {@link GenericDialog} class
- * to query user input.
- *
- * @author WB
- */
 public class Gaussian_Blur_1D implements PlugInFilter
 {
     private static double sigma = 2; // filter radius (static field keeps value between invocations)

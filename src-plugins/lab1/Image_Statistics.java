@@ -5,9 +5,6 @@ import ij.ImagePlus;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 
-/**
- * @author R. Saparov
- */
 public class Image_Statistics implements PlugInFilter
 {
 

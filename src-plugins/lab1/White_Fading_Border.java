@@ -7,9 +7,6 @@ import ij.process.ImageProcessor;
 
 import java.util.ArrayList;
 
-/**
- * @author R. Saparov
- */
 public class White_Fading_Border implements PlugInFilter
 {
 

@@ -9,12 +9,7 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
-/**
- * Demonstrates how to create a binary mask image from a user-selected
- * region of interest (ROI).
- *
- * @author WB
- */
+
 public class Fake_Depth_Field implements PlugInFilter
 {
     private ImagePlus im;
