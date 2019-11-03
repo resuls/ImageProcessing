@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="imagingbook">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jars/imagingbook-common.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
