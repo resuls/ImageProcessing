@@ -1,6 +1,5 @@
 package lab5;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ByteProcessor;
@@ -10,8 +9,9 @@ import imagingbook.pub.regions.RegionContourLabeling;
 import imagingbook.pub.regions.RegionLabeling;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
+
+import static lab5.Moment.getCentralMoments;
 
 public class Major_Axes implements PlugInFilter
 {
@@ -29,32 +29,16 @@ public class Major_Axes implements PlugInFilter
 
         ColorProcessor cp = ip.convertToColorProcessor();
 
-        // u11, u20, u02
-        double[] centralMoments = new double[3];
         // visit and color the pixels inside of each region:
         for (RegionLabeling.BinaryRegion R : regions)
         {
-            centralMoments[0] = calculateCentralMoments(R, 1, 1);
-            centralMoments[1] = calculateCentralMoments(R, 2, 0);
-            centralMoments[2] = calculateCentralMoments(R, 0, 2);
-
+            double[] centralMoments = getCentralMoments(R);
+            // Get angle
             double angle = 0.5 * Math.atan2(2 * centralMoments[0], centralMoments[1] - centralMoments[2]);
             drawMajorAxis(cp, R, angle);
         }
 
         new ImagePlus("MajorAxis", cp).show();
-    }
-
-    private int calculateCentralMoments(RegionLabeling.BinaryRegion R,
-                                        int p, int q)
-    {
-        int centralMoment = 0;
-        for (Point point : R)
-        {
-            centralMoment += Math.pow(point.getX() - R.getCenterPoint().getX(), p)
-            * Math.pow(point.getY() - R.getCenterPoint().getY(), q);
-        }
-        return centralMoment;
     }
 
     private void drawMajorAxis(ColorProcessor cp, RegionLabeling.BinaryRegion R, double angle)
