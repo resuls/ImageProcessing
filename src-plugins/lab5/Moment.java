@@ -27,4 +27,13 @@ public class Moment
         }
         return centralMoment;
     }
+
+    public static double getEccentricity(RegionLabeling.BinaryRegion R)
+    {
+        double[] c = getCentralMoments(R);
+        double upper = c[1] + c[2] + Math.sqrt(Math.pow(c[1] - c[2], 2) + 4 * c[0] * c[0]);
+        double bottom = c[1] + c[2] - Math.sqrt(Math.pow(c[1] - c[2], 2) + 4 * c[0] * c[0]);
+
+        return upper / bottom;
+    }
 }
