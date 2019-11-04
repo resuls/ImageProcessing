@@ -6,23 +6,12 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
-import imagingbook.pub.regions.Contour;
 import imagingbook.pub.regions.RegionContourLabeling;
 import imagingbook.pub.regions.RegionLabeling;
 
 import java.awt.*;
 import java.util.List;
 
-/**
- * This plugin assumes as input a binary image with values
- * 0 (for background pixels) and >1 (for foreground pixels).
- * The input image is labeled and all detected regions are
- * processed.
- * It uses the binary region segmentation features provided
- * by the 'imagingbook' library (installed in initial project).
- *
- * @author WB
- */
 public class Calculate_Region_Positions implements PlugInFilter
 {
 
