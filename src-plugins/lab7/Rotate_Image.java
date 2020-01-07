@@ -34,7 +34,7 @@ public class Rotate_Image implements PlugInFilter
     // METHODS TO COMPLETE
     // -------------------------------------------------------------------
 
-    private Point2D getCenterPoint()
+    public Point2D getCenterPoint()
     {
         Point2D c = new Point();
         c.setLocation(im.getWidth() / 2.0, im.getHeight() / 2.0);
@@ -50,7 +50,7 @@ public class Rotate_Image implements PlugInFilter
      * @param angle The rotation angle (in degrees).
      * @return The transformation matrix.
      */
-    private double[][] makeTransformationMatrix(double angle)
+    public double[][] makeTransformationMatrix(double angle)
     {
         //center of the target image
         Point2D c = getCenterPoint();

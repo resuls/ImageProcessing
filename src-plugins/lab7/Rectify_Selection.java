@@ -74,7 +74,7 @@ public class Rectify_Selection implements PlugInFilter
      * @param q target image points (q_0,...,q_3)
      * @return the linear transformation that maps points P to Q.
      */
-    private double[][] makeTransformationMatrix(Point2D[] p, Point2D[] q)
+    public static double[][] makeTransformationMatrix(Point2D[] p, Point2D[] q)
     {
         if (p.length < 4 || q.length < 4)
             throw new IllegalArgumentException("At least 4 point pairs are required!");
@@ -98,7 +98,7 @@ public class Rectify_Selection implements PlugInFilter
     }
 
 
-    private double[][] getMatrixM(Point2D[] p, Point2D[] q)
+    public static double[][] getMatrixM(Point2D[] p, Point2D[] q)
     {
         return new double[][]
         {
@@ -116,7 +116,7 @@ public class Rectify_Selection implements PlugInFilter
         };
     }
 
-    private double[] getVectorB(Point2D[] q)
+    public static double[] getVectorB(Point2D[] q)
     {
         double[] b = new double[8];
         int i = 0;
