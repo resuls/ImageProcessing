@@ -45,11 +45,8 @@ public class Gaussian_Filter_2D implements PlugInFilter
         int center = (int) (6 * sigma);
         size = 2 * center + 1;
         float[] h = new float[size * size];
-
         double sigma2 = sigma * sigma;
-
         int ind = 0;
-
         for (int i = 0; i < size; i++)
         {
             int x = i - center;

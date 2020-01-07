@@ -12,9 +12,9 @@ public class Histogram
     public static int[] getCumulativeHistogram(int[] h)
     {
         int[] H = new int[256];
-        for (int i = 0; i < 256; i++)
-            for (int j = 0; j <= i; j++)
-                H[i] += h[j];
+//        for (int i = 0; i < 256; i++)
+//            for (int j = 0; j <= i; j++)
+//                H[i] += h[j];
 
         H[0] = h[0];
         for (int i = 1; i < 256; i++)

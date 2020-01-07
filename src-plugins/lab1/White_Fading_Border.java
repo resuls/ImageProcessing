@@ -21,7 +21,6 @@ public class White_Fading_Border implements PlugInFilter
         int width = ip.getWidth();
 
         ip.invert();
-
         double d = width * .2;
 
         for (int y = 0; y < height; y++)

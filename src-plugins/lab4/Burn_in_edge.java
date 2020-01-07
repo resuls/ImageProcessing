@@ -22,16 +22,18 @@ public class Burn_in_edge implements PlugInFilter
 
     public void run(ImageProcessor ip)
     {
-        ColorProcessor cp = (ColorProcessor) ip;
+        ColorProcessor cp = (ColorProcessor) ip.duplicate();
         ByteProcessor bp = ip.convertToByteProcessor();
-
         FloatProcessor normalized = edgeOperator(bp);
+        new ImagePlus("normalized", normalized).show();
+
+        FloatProcessor soft = getSoftened(normalized);
 
         double radius = 5;
         RankFilters rf = new RankFilters();
         rf.rank(cp, radius, RankFilters.MEDIAN);
 
-        new ImagePlus("RankFilters", cp.duplicate()).show();
+        new ImagePlus("soft", soft).show();
 
         int[] RGB = new int[3];
         for (int y = 0; y < ip.getHeight(); y++)
@@ -39,13 +41,28 @@ public class Burn_in_edge implements PlugInFilter
             for (int x = 0; x < ip.getWidth(); x++)
             {
                 cp.getPixel(x, y, RGB);
-                double burnin = softThreshold(normalized.getf(x, y));
+                double burnin = soft.getf(x, y);
                 RGB[0] *= burnin;
                 RGB[1] *= burnin;
                 RGB[2] *= burnin;
                 cp.putPixel(x,y, RGB);
             }
         }
+
+        new ImagePlus("result", cp).show();
+    }
+
+    private FloatProcessor getSoftened(FloatProcessor fp)
+    {
+        FloatProcessor soft = fp.convertToFloatProcessor();
+        for (int y = 0; y < fp.getHeight(); y++)
+        {
+            for (int x = 0; x < fp.getWidth(); x++)
+            {
+                soft.putPixelValue(x, y, softThreshold(fp.getf(x, y)));
+            }
+        }
+        return soft;
     }
 
     private double softThreshold(float E)

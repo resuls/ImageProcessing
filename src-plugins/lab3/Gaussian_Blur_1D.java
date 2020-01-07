@@ -46,15 +46,12 @@ public class Gaussian_Blur_1D implements PlugInFilter
         int center = (int) (6 * sigma);
         size = 2 * center + 1;
         float[] h = new float[size];
-
         double sigma2 = sigma * sigma;
-
         for (int i = 0; i < h.length; i++)
         {
             double r = center - i;
             h[i] = (float) Math.exp(-0.5 * (r * r) / sigma2);
         }
-
         return h;
     }
 }

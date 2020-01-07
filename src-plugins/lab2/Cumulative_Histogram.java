@@ -24,6 +24,7 @@ public class Cumulative_Histogram implements PlugInFilter
 
         int[] cH = getCumulativeHistogram(h);
 
+        showHistogram(h, "a");
         // show the result:
         showHistogram(cH, "hist_" + im.getTitle());
     }
