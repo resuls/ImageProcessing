@@ -39,7 +39,7 @@ public class Bounding_Box implements PlugInFilter
         new ImagePlus("Bounding_box", cp).show();
     }
 
-    private Point[] getBoundingBox(RegionLabeling.BinaryRegion R)
+    public static Point[] getBoundingBox(RegionLabeling.BinaryRegion R)
     {
         double a_min, a_max, b_min, b_max;
 
@@ -64,28 +64,28 @@ public class Bounding_Box implements PlugInFilter
         }
 
         // A B C D
-        Point[] res = new Point[4];
-        res[0] = addVectors(multiplyVectorTo(ea, a_min), multiplyVectorTo(eb, b_min));
-        res[1] = addVectors(multiplyVectorTo(ea, a_min), multiplyVectorTo(eb, b_max));
-        res[2] = addVectors(multiplyVectorTo(ea, a_max), multiplyVectorTo(eb, b_max));
-        res[3] = addVectors(multiplyVectorTo(ea, a_max), multiplyVectorTo(eb, b_min));
+        Point[] corners = new Point[4];
+        corners[0] = addVectors(multiplyVectorTo(ea, a_min), multiplyVectorTo(eb, b_min));
+        corners[1] = addVectors(multiplyVectorTo(ea, a_min), multiplyVectorTo(eb, b_max));
+        corners[2] = addVectors(multiplyVectorTo(ea, a_max), multiplyVectorTo(eb, b_max));
+        corners[3] = addVectors(multiplyVectorTo(ea, a_max), multiplyVectorTo(eb, b_min));
 
-        return res;
+        return corners;
     }
 
-    private Point multiplyVectorTo(double[] vector, double c)
+    private static Point multiplyVectorTo(double[] vector, double c)
     {
         return new Point((int) (vector[0] * c), (int) (vector[1] * c));
     }
 
-    private Point addVectors(Point v1, Point v2)
+    private static Point addVectors(Point v1, Point v2)
     {
         return new Point(v1.x + v2.x, v1.y + v2.y);
     }
 
-    private void drawBox(ColorProcessor cp, Point[] b)
+    public static void drawBox(ColorProcessor cp, Point[] b)
     {
-        cp.setColor(Color.RED);
+        cp.setColor(Color.GREEN);
         for (int i = 0; i < 4; i++)
         {
             cp.drawLine(b[i].x, b[i].y, b[(i + 1) % 4].x, b[(i + 1) % 4].y);

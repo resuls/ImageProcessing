@@ -22,7 +22,6 @@ import java.util.List;
 import static lab5.Bounding_Box.drawBox;
 import static lab5.Bounding_Box.getBoundingBox;
 import static lab5.Moment.getCentralMoments;
-import static lab7.Rectify_Selection.makeTransformationMatrix;
 
 public class Domino implements PlugInFilter
 {
@@ -40,11 +39,13 @@ public class Domino implements PlugInFilter
         ByteProcessor bp = ip.convertToByteProcessor();
         new OtsuThresholder().threshold(bp);
         bp.invert();
+        new ImagePlus("threshold", bp.duplicate()).show();
+
 
         // Closing
         BinaryMorphologyFilter filter = new BinaryMorphologyFilter.Disk(3);
         filter.applyTo(bp, BinaryMorphologyFilter.OpType.Close);
-//        new ImagePlus("closing", bp).show();
+        new ImagePlus("closing", bp.duplicate()).show();
 
         // Segmentation and Major Axis
         RegionContourLabeling segmenter = new RegionContourLabeling(bp);
@@ -63,9 +64,7 @@ public class Domino implements PlugInFilter
                 continue;
 
             Point[] corners = getBoundingBox(R);
-
             getEyes(R, cp);
-
             drawBox(cp, corners);
         }
 
@@ -125,7 +124,6 @@ public class Domino implements PlugInFilter
 
         int leftEyes = 0;
         int rightEyes = 0;
-
         List<Contour> contours = R.getInnerContours();
         for (Contour c : contours)
         {
@@ -155,12 +153,10 @@ public class Domino implements PlugInFilter
     private Line getHalfLine(RegionLabeling.BinaryRegion R, double angle)
     {
         angle -= Math.PI / 2;
-
         Point center = new Point((int) R.getCenterPoint().getX(), (int) R.getCenterPoint().getY());
 
         Point start = new Point((int) (center.getX() + B_WIDTH / 2 * Math.cos(angle)),
                 (int) (center.getY() +  B_WIDTH / 2 * Math.sin(angle)));
-
         Point end = new Point((int) (start.getX() + B_WIDTH * Math.cos(angle + Math.PI)),
                 (int) (start.getY() +  B_WIDTH * Math.sin(angle + Math.PI)));
 

@@ -1,7 +1,6 @@
 package lab6;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Outlier
 {
@@ -12,7 +11,6 @@ public class Outlier
         {
             sum += value;
         }
-
         return sum / values.size();
     }
 
@@ -20,12 +18,10 @@ public class Outlier
     {
         double mean = getMean(values);
         double temp = 0;
-
         for (double a : values)
         {
             temp += (a - mean) * (a - mean);
         }
-
         return temp / (values.size() - 1);
     }
 

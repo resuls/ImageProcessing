@@ -54,13 +54,11 @@ public class Rotate_Image implements PlugInFilter
     {
         //center of the target image
         Point2D c = getCenterPoint();
-
         angle = angle * Math.PI / 180;
-
         return new double[][]
         {
-            {Math.cos(angle), -Math.sin(angle), (c.getX() * (1 - Math.cos(angle))) + (c.getY() * Math.sin(angle))},
-            {Math.sin(angle), Math.cos(angle), (c.getY() * (1 - Math.cos(angle))) - (c.getX() * Math.sin(angle))},
+            {Math.cos(angle), -Math.sin(angle), c.getX() * (1 - Math.cos(angle)) + c.getY() * Math.sin(angle)},
+            {Math.sin(angle), Math.cos(angle), c.getY() * (1 - Math.cos(angle)) - c.getX() * Math.sin(angle)},
             {0, 0, 1}
         };
     }

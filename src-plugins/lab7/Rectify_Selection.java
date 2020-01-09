@@ -11,6 +11,7 @@ import lab7.lib.Utils;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 /**
  * This ImageJ plugin transforms an image selection
@@ -82,11 +83,11 @@ public class Rectify_Selection implements PlugInFilter
         //Matrix M
         double[][] M = getMatrixM(p, q);
 
-        //Vector b
-        double[] b = getVectorB(q);
+        //Vector x
+        double[] x = getVectorX(q);
 
         //Solving the 8 linear equations for the unknown vector a
-        double[] a = Matrix.solve(M, b);
+        double[] a = Matrix.solve(M, x);
 
         //Calculating projective matrix A
         return new double[][]
@@ -116,7 +117,7 @@ public class Rectify_Selection implements PlugInFilter
         };
     }
 
-    public static double[] getVectorB(Point2D[] q)
+    public static double[] getVectorX(Point2D[] q)
     {
         double[] b = new double[8];
         int i = 0;

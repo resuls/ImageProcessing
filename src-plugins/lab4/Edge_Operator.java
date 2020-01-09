@@ -28,24 +28,27 @@ public class Edge_Operator implements PlugInFilter
 
     private FloatProcessor[] edgeOperator(ImageProcessor ip)
     {
-        FloatProcessor ipx = ip.convertToFloatProcessor();
-        FloatProcessor ipy = ip.convertToFloatProcessor();
-
         float[] gradient = {-1, 0, 1};
         float[] falloff = {3, 10, 3};
 
-        ipx.convolve(falloff, 1, 3);
-        ipx.convolve(gradient, 3, 1);
-        ipx.resetMinAndMax();
+//        float[] hx = {0, 3, 10, -3, 0, 3, -10, -3, 0};
+//        float[] hy = {10, -3, 0, -3, 0, 3, 0, 3, 10};
+//
+//        FloatProcessor ipx = ip.convertToFloatProcessor();
+//        ipx.convolve(hx, 3, 3);
+//        ipx.resetMinAndMax();
+//
+//        FloatProcessor ipy = ip.convertToFloatProcessor();
+//        ipy.convolve(hy, 3, 3);
+//        ipy.resetMinAndMax();
 
-        ipy.convolve(falloff, 3, 1);
-        ipy.convolve(gradient, 1, 3);
-        ipy.resetMinAndMax();
+        FloatProcessor ipx = getEdgeMap(ip, gradient, falloff);
+        FloatProcessor ipy = getEdgeMap(ip, falloff, gradient);
 
         int width = ip.getWidth();
         int height = ip.getHeight();
-        FloatProcessor res = new FloatProcessor(width, height);
 
+        FloatProcessor res = new FloatProcessor(width, height);
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -54,7 +57,6 @@ public class Edge_Operator implements PlugInFilter
                 double py = ipy.getf(x, y);
 
                 res.setf(x, y, (float) Math.sqrt(px * px + py * py));
-//                res.setf(x, y, (float) Math.atan2(py, px));
             }
         }
 
@@ -62,5 +64,14 @@ public class Edge_Operator implements PlugInFilter
         res.resetMinAndMax();
 
         return new FloatProcessor[] {ipx, ipy, res};
+    }
+
+    private FloatProcessor getEdgeMap(ImageProcessor ip, float[] gradient, float[] falloff)
+    {
+        FloatProcessor ipx = ip.convertToFloatProcessor();
+        ipx.convolve(falloff, 1, 3);
+        ipx.convolve(gradient, 3, 1);
+        ipx.resetMinAndMax();
+        return ipx;
     }
 }

@@ -29,9 +29,9 @@ public class Burn_in_edge implements PlugInFilter
 
         FloatProcessor soft = getSoftened(normalized);
 
-        double radius = 5;
-        RankFilters rf = new RankFilters();
-        rf.rank(cp, radius, RankFilters.MEDIAN);
+//        double radius = 5;
+//        RankFilters rf = new RankFilters();
+//        rf.rank(cp, radius, RankFilters.MEDIAN);
 
         new ImagePlus("soft", soft).show();
 

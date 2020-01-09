@@ -32,10 +32,13 @@ public class Skew_Rotation implements PlugInFilter
         ByteProcessor bp = ip.convertToByteProcessor();
         new OtsuThresholder().threshold(bp);
         bp.invert();
+        new ImagePlus("Threshold", bp.duplicate()).show();
 
         // Dilate
         BinaryMorphologyFilter filter = new BinaryMorphologyFilter.Disk(3);
         filter.applyTo(bp, BinaryMorphologyFilter.OpType.Dilate);
+        new ImagePlus("Dilate", bp.duplicate()).show();
+
 
         RegionContourLabeling segmenter = new RegionContourLabeling((ByteProcessor) bp);
         List<RegionLabeling.BinaryRegion> regions = segmenter.getRegions(true);
@@ -64,7 +67,7 @@ public class Skew_Rotation implements PlugInFilter
         new ImagePlus("With Outliers", cp).show();
 
         cp = bp.convertToColorProcessor();
-        angles = eliminateOutliers(angles, 1.5);
+        angles = eliminateOutliers(angles, 2);
         double averageSkew = getGlobalSkewMean(angles);
         double degrees = -averageSkew * 180 / Math.PI;
         IJ.log(degrees + "");
